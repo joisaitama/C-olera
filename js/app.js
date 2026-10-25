@@ -1,12 +1,3 @@
-/* ============================================================
-   AS ÁGUAS DO CÓLERA — motor do jogo
-   Depende de story.js (deve ser carregado antes deste arquivo)
-
-   Estilo único "cena": toda tela (prólogo, capítulos, escolhas,
-   finais, créditos) usa a mesma estrutura visual — imagem em
-   cima, rodapé escuro com o texto embaixo — para manter a
-   mesma vibe do início ao fim.
-   ============================================================ */
 
 const bodyEl = document.getElementById('body');
 const bookEl = document.getElementById('book');
@@ -46,11 +37,6 @@ function heroHTML(node){
   const isPlaceholder = PLACEHOLDER_KEYS.has(key);
   const cls = 'cine-hero' + (isPlaceholder ? ' is-placeholder' : '');
   let html = `<div class="${cls}">${imgTag(key, caption)}`;
-  /* ** ALTERADO ;;; o personagem agora aparece DENTRO do próprio cenário
-     (de corpo inteiro, "em pé" na cena), em vez de um retrato circular
-     separado flutuando no texto — ver characterOnStageHTML() abaixo e
-     a classe .stage-character no CSS. */
-  /* Catarina sempre no lado ESQUERDO; os demais personagens ficam à direita */
   const hasPartner = !!(node.portrait && node.portrait !== 'catarina');
   html += catarinaOnStageHTML(key, hasPartner);
   if(hasPartner){
@@ -60,13 +46,8 @@ function heroHTML(node){
   return html;
 }
 
-/* Catarina não aparece no cenário da penteadeira. O estilo vai inline
-   para não ser preciso mexer no estilos.css. */
 function catarinaOnStageHTML(sceneKey, hasPartner){
   if(sceneKey === 'penteadeira') return '';
-  /* personagens mais centralizados: com outro personagem na cena, Catarina fica
-     à esquerda do centro e o outro à direita; sozinha, ela fica no meio.
-     Nas cenas do porto, ela fica na calçada (não sobre o mar). */
   const onPier = (sceneKey === 'portoDia' || sceneKey === 'portoNoite');
   let pos;
   if(hasPartner) pos = `left:6%; transform:none;`;
