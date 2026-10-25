@@ -800,7 +800,6 @@ button.cine-choice-btn:focus-visible{ outline:2px solid var(--rust); outline-off
 
 .cine-footer .start-btn.continue-solo{ display:block; margin-top:28px; clear:both; }
 
-/* créditos, no mesmo estilo escuro do resto do jogo */
 .credits-screen .credits-sub{
   text-align:center;
   font-family:'Special Elite', monospace;
@@ -945,14 +944,6 @@ button.cine-choice-btn:focus-visible{ outline:2px solid var(--rust); outline-off
   align-self:center;
 }
 
-
-/* ============================================================
-   ÍCONE DO DIÁRIO DE BORDO (esqueleto escrevendo) — animado
-   Uma única imagem (menuguiadebordo.webp) é repetida em 3 camadas
-   recortadas (corpo / cabeça / pergaminho); cada camada se mexe um
-   pouco diferente. A cabeça gira em torno do pescoço (onde o corte
-   passa), então não aparece emenda.
-   ============================================================ */
 .reaper{
   --icon:url("../img/iconesanduichebordo/menuguiadebordo.webp");
   position:relative;
@@ -971,7 +962,6 @@ button.cine-choice-btn:focus-visible{ outline:2px solid var(--rust); outline-off
   background:var(--icon) center/contain no-repeat;
   pointer-events:none;
 }
-/* corpo: tudo, menos o "buraco" da cabeça e do pergaminho */
 .reaper .rp-body{
   clip-path:polygon(evenodd,
     0 0, 100% 0, 100% 100%, 0 100%, 0 0,
@@ -1030,9 +1020,6 @@ button.cine-choice-btn:focus-visible{ outline:2px solid var(--rust); outline-off
 @media (prefers-reduced-motion: reduce){
   .reaper, .reaper .rp, .log-tab.scribble .reaper, .log-tab.scribble .rp-head{ animation:none; }
 }
-
-/* o cenário ocupa o quadro inteiro; o personagem fica "em pé" por cima dele
-   (sem isso o flex espremia a imagem do cenário e deixava uma faixa bege) */
 .cine-hero > img{
   position:absolute;
   inset:0;
@@ -1050,13 +1037,6 @@ button.cine-choice-btn:focus-visible{ outline:2px solid var(--rust); outline-off
   object-fit:contain;
   filter:drop-shadow(0 14px 18px rgba(0,0,0,0.55));
 }
-
-
-/* ============================================================
-   DIÁRIO DE BORDO sob demanda: só o selinho do esqueleto fica
-   visível (canto da tela, sem barra lateral). O painel só abre
-   ao clicar e fecha ao clicar fora, no X ou com Esc.
-   ============================================================ */
 .log{ transform:none!important; width:0!important; height:0!important; display:block; }
 .log-tab{
   position:fixed; top:10px; left:10px; z-index:41;
@@ -1087,11 +1067,6 @@ button.cine-choice-btn:focus-visible{ outline:2px solid var(--rust); outline-off
 }
 .log.open ~ .log-backdrop, .log-backdrop.show{ opacity:1; pointer-events:auto; }
 
-
-/* ============================================================
-   Ambientação estilo "diálogo de RPG": moldura dourada na cena,
-   personagens grandes e centralizados, plaquinha de nome em faixa
-   ============================================================ */
 .cine-hero{
   border:3px solid #b8924a;
   box-shadow: inset 0 0 0 2px #3a2a12, inset 0 0 60px rgba(0,0,0,0.55), 0 6px 18px rgba(0,0,0,0.5);
@@ -1113,13 +1088,6 @@ button.cine-choice-btn:focus-visible{ outline:2px solid var(--rust); outline-off
   position:relative; z-index:3;
   box-shadow:0 2px 6px rgba(0,0,0,0.6);
 }
-
-
-/* ============================================================
-   Personagens em plano próximo (da cintura para cima), grandes e
-   perto da tela, como num diálogo de RPG. O corte é feito pelo
-   próprio quadro da cena; texto e escolhas ficam como antes.
-   ============================================================ */
 .cine-hero{ height:clamp(320px, 60vw, 540px); }
 .stage-character{
   height:100%; max-height:none;
