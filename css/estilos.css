@@ -1,0 +1,1149 @@
+:root{
+    --paper:#e9dfc4;
+    --paper-edge:#dcd0ac;
+    --ink:#2a2018;
+    --ink-soft:#4a3d2e;
+    --fog:#3d5654;
+    --rust:#7c2f22;
+    --gold:#8f7638;
+    --night:#191c17;
+  }
+
+  *{box-sizing:border-box;}
+
+  html{
+    height:100%;
+  }
+
+  html,body{
+    margin:0;
+    min-height:100%;
+    min-height:100dvh; 
+    background:var(--night);
+    font-family:'Crimson Text', serif;
+    color:var(--ink);
+    overflow-x:hidden; 
+  }
+
+  body{
+    display:flex;
+    justify-content:center;
+    padding:0; 
+  }
+
+  body.sick{
+    --paper:#cfd0c0;
+    --paper-edge:#bcbca8;
+    --fog:#586b58;
+  }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:radial-gradient(ellipse at 50% 20%, rgba(255,244,214,0.10), transparent 55%),
+               radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.65), transparent 60%);
+    z-index:5;
+    animation: flicker 7s ease-in-out infinite;
+  }
+
+  body.sick::before{
+    animation: flicker-sick 11s ease-in-out infinite;
+    background:radial-gradient(ellipse at 50% 20%, rgba(180,255,200,0.05), transparent 55%),
+               radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.72), transparent 60%);
+  }
+
+  @keyframes flicker{ 0%,100%{opacity:1;} 50%{opacity:0.88;} }
+  @keyframes flicker-sick{ 0%,100%{opacity:1;} 50%{opacity:0.75;} }
+
+  .stage{
+    width:100%;
+    max-width:none; 
+    position:relative;
+  }
+
+  .book{
+    width:100%;
+    background:var(--paper);
+    background-image:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.015) 0px, rgba(0,0,0,0.015) 1px, transparent 1px, transparent 3px);
+    border:none; 
+    box-shadow: inset 0 0 90px rgba(90,60,20,0.10); 
+    padding:40px 44px 36px;
+    position:relative;
+    min-height:520px;
+    transition: background 1.2s ease;
+    overflow:hidden;
+  }
+
+  .book.fullbleed{ min-height:0; }
+
+  .book::after{
+    content:"";
+    position:absolute;
+    inset:10px;
+    border:1px solid rgba(42,32,24,0.18);
+    pointer-events:none;
+  }
+
+  .masthead{
+    text-align:center;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:14px;
+    margin-bottom:22px;
+  }
+
+  .masthead .kicker{
+    font-family:'Special Elite', monospace;
+    font-size:11px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  .masthead h1{
+    font-family:'IM Fell English SC', serif;
+    font-size:clamp(28px,4.4vw,42px);
+    margin:6px 0 4px;
+    letter-spacing:1px;
+  }
+
+  .masthead .sub{
+    font-family:'IM Fell English', serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink-soft);
+  }
+
+  .chapter-label{
+    font-family:'Special Elite', monospace;
+    font-size:12px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--rust);
+    margin-bottom:6px;
+  }
+
+  .status-line{
+    font-family:'Special Elite', monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    margin-bottom:18px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+
+  .status-line span.tag{
+    border:1px solid var(--ink-soft);
+    padding:2px 7px;
+    border-radius:2px;
+  }
+  .status-line span.tag.warn{ border-color:var(--rust); color:var(--rust); }
+
+  .progress-wrap{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .progress-track{
+    width:90px;
+    height:6px;
+    background:rgba(42,32,24,0.15);
+    border:1px solid var(--ink-soft);
+    position:relative;
+  }
+  .progress-fill{
+    height:100%;
+    background:var(--rust);
+    transition:width 0.5s ease;
+  }
+
+  /* imagens de cenário */
+  .scene-banner{
+    width:calc(100% + 88px);
+    margin:-40px -44px 22px;
+    height:230px;
+    overflow:hidden;
+    position:relative;
+  }
+  .scene-banner img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    filter:sepia(0.18) saturate(0.92) contrast(1.04);
+  }
+  .scene-banner::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(25,20,14,0.05) 55%, var(--paper) 98%);
+  }
+  body.sick .scene-banner::after{
+    background:linear-gradient(180deg, rgba(20,26,20,0.15) 55%, var(--paper) 98%);
+  }
+  .scene-banner .caption{
+    position:absolute;
+    left:14px;
+    bottom:14px;
+    z-index:2;
+    font-family:'Special Elite', monospace;
+    font-size:11px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:#f2ead2;
+    text-shadow:0 1px 4px rgba(0,0,0,0.8);
+  }
+
+  /* retrato de personagem */
+  .portrait-cameo{
+    float:right;
+    width:112px;
+    margin:0 0 12px 18px;
+    text-align:center;
+  }
+  .portrait-cameo .frame{
+    width:112px;
+    height:112px;
+    border-radius:50%;
+    overflow:hidden;
+    border:3px solid var(--gold);
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  }
+  .portrait-cameo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:top center;
+  }
+  .portrait-cameo .name{
+    font-family:'Special Elite', monospace;
+    font-size:10px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-top:6px;
+  }
+
+  .story-text{
+    font-size:19px;
+    line-height:1.72;
+  }
+  .story-text::after{ content:""; display:block; clear:both; }
+  .story-text p{ margin:0 0 16px; }
+
+  .quote-line{
+    font-family:'IM Fell English', serif;
+    font-style:italic;
+    font-size:20px;
+    text-align:center;
+    margin:26px 0 6px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--paper-edge);
+    border-bottom:1px solid var(--paper-edge);
+    padding:16px 10px;
+  }
+
+  .choices{ margin-top:28px; display:flex; flex-direction:column; gap:10px; }
+  .choices .prompt{
+    font-family:'Special Elite', monospace;
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:2px;
+  }
+
+  button.choice-btn{
+    font-family:'IM Fell English', serif;
+    font-size:18px;
+    text-align:left;
+    background:transparent;
+    border:1px solid var(--ink-soft);
+    color:var(--ink);
+    padding:12px 18px;
+    cursor:pointer;
+    transition: background 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+  }
+  button.choice-btn::before{ content:"—"; margin-right:8px; color:var(--rust); }
+  button.choice-btn:hover{ background:rgba(124,47,34,0.08); border-color:var(--rust); transform:translateX(3px); }
+  button.choice-btn:focus-visible{ outline:2px solid var(--rust); outline-offset:2px; }
+
+  button.continue-btn{
+    align-self:flex-start;
+    font-family:'Special Elite', monospace;
+    font-size:13px;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    background:var(--ink);
+    color:var(--paper);
+    border:none;
+    padding:12px 22px;
+    cursor:pointer;
+    margin-top:26px;
+    transition: opacity 0.2s ease;
+  }
+  button.continue-btn:hover{ opacity:0.85; }
+  button.continue-btn:focus-visible{ outline:2px solid var(--rust); outline-offset:2px; }
+
+  .ending-tag{
+    font-family:'IM Fell English SC', serif;
+    font-size:15px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--rust);
+    margin-bottom:10px;
+  }
+
+  /* tela de titulo */
+  .title-screen{ text-align:center; padding:0; }
+  .title-screen .hero{
+    width:calc(100% + 88px);
+    margin:-40px -44px 0;
+    height:340px;
+    position:relative;
+    overflow:hidden;
+  }
+  .title-screen .hero img{
+    width:100%; height:100%; object-fit:cover;
+    filter:sepia(0.25) saturate(0.85) contrast(1.05) brightness(0.75);
+  }
+  .title-screen .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(10,8,5,0.15) 0%, rgba(15,12,8,0.55) 70%, var(--night) 100%);
+  }
+  .title-screen .title-copy{
+    position:relative;
+    margin:-90px -44px -36px;
+    z-index:2;
+    padding:0 30px 34px;
+    background:#141210;
+  }
+  .title-screen .title-copy::before{
+    content:"";
+    display:block;
+    height:90px;
+    margin:0 -30px 0;
+    background:linear-gradient(180deg, rgba(20,18,16,0) 0%, #141210 100%);
+  }
+  .title-screen h1{
+    font-family:'IM Fell English SC', serif;
+    font-size:clamp(32px,6vw,52px);
+    color:#f2ead2;
+    text-shadow:0 3px 18px rgba(0,0,0,0.8);
+    margin:0 0 10px;
+    letter-spacing:1.5px;
+  }
+  .title-screen .subtitle{
+    font-family:'IM Fell English', serif;
+    font-style:italic;
+    font-size:19px;
+    color:#e4d9b8;
+    text-shadow:0 2px 10px rgba(0,0,0,0.8);
+    margin-bottom:26px;
+  }
+  .title-screen .place-tag{
+    font-family:'Special Elite', monospace;
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin:20px 0 0;
+  }
+  button.start-btn{
+    font-family:'IM Fell English SC', serif;
+    font-size:20px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    background:var(--rust);
+    color:#f2ead2;
+    border:1px solid #c98a6f;
+    padding:14px 46px;
+    cursor:pointer;
+    box-shadow:0 10px 26px rgba(0,0,0,0.4);
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+  button.start-btn:hover{ transform:translateY(-2px); background:#8f382a; }
+  button.start-btn:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; }
+
+  /* tela de creditos */
+  .credits-screen{
+    padding:10px 6px;
+  }
+  .credits-screen h2{
+    font-family:'IM Fell English SC', serif;
+    font-size:26px;
+    text-align:center;
+    margin:0 0 4px;
+    letter-spacing:1px;
+  }
+  .credits-screen .credits-sub{
+    text-align:center;
+    font-family:'Special Elite', monospace;
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:26px;
+  }
+  .credits-list{
+    list-style:none;
+    margin:0 auto 30px;
+    padding:0;
+    max-width:440px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .credits-list li{
+    display:flex;
+    justify-content:space-between;
+    gap:16px;
+    border-bottom:1px dotted var(--paper-edge);
+    padding-bottom:10px;
+    font-size:16px;
+  }
+  .credits-list .role{
+    font-family:'Special Elite', monospace;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    flex:0 0 auto;
+  }
+  .credits-list .name{
+    font-family:'IM Fell English', serif;
+    font-style:italic;
+    text-align:right;
+  }
+  .credits-screen .center-row{
+    display:flex;
+    justify-content:center;
+  }
+
+  .log{
+    --tab-w:52px;
+    position:fixed;
+    left:0;
+    top:0;
+    height:100dvh;
+    width:min(300px, 84vw);
+    z-index:40;
+    display:flex;
+    transform:translateX(calc(-100% + var(--tab-w)));
+    transition:transform 0.35s ease;
+    font-family:'Special Elite', monospace;
+    font-size:12px;
+    color:#cfc6a8;
+  }
+  .log.open{ transform:translateX(0); }
+
+  .log-tab{
+    order:2;
+    flex:0 0 var(--tab-w);
+    width:var(--tab-w);
+    height:100%;
+    background:#191c17;
+    border:1px solid #4a4636;
+    border-left:none;
+    box-shadow:6px 0 22px rgba(0,0,0,0.4);
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    gap:10px;
+    padding:12px 0 14px;
+  }
+  .log-tab-label{ flex:1 1 auto; display:flex; align-items:center; justify-content:center; }
+  .log-tab:hover{ background:#232620; }
+  .log-tab:focus-visible{ outline:2px solid var(--rust); outline-offset:-2px; }
+  .log-tab-label{
+    writing-mode:vertical-rl;
+    transform:rotate(180deg);
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-size:11px;
+    color:#c9bf9c;
+    white-space:nowrap;
+  }
+
+  .log-panel{
+    order:1;
+    flex:1 1 auto;
+    min-width:0;
+    overflow-y:auto;
+    background:rgba(15,13,10,0.94);
+    backdrop-filter:blur(2px);
+    border:1px solid #4a4636;
+    border-right:none;
+    padding:16px 14px 18px;
+  }
+  .log-panel::-webkit-scrollbar{ width:7px; }
+  .log-panel::-webkit-scrollbar-track{ background:transparent; }
+  .log-panel::-webkit-scrollbar-thumb{ background:#4a4636; border-radius:4px; }
+  .log .log-title{
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-size:11px;
+    color:#8f8564;
+    border-bottom:1px solid #4a4636;
+    padding-bottom:8px;
+    margin-bottom:12px;
+    position:sticky;
+    top:0;
+    background:#191c17;
+  }
+  .log .log-empty{ color:#6b6350; font-style:italic; }
+  .log ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+  .log li{
+    padding-left:14px;
+    border-left:2px solid var(--fog);
+    line-height:1.5;
+    opacity:0;
+    animation: stamp-in 0.5s ease forwards;
+  }
+  @keyframes stamp-in{ from{opacity:0; transform:translateX(-4px);} to{opacity:1; transform:translateX(0);} }
+
+  /* tela cinematica (prologo) */
+  .cine-screen{ margin:-40px -44px -36px; }
+  .cine-hero{ width:100%; height:clamp(260px, 54vw, 460px); overflow:hidden; position:relative; } 
+  .cine-hero img{
+    width:100%; height:100%; object-fit:cover;
+    filter:sepia(0.25) saturate(0.85) contrast(1.05) brightness(0.8);
+  }
+  .cine-footer{
+    background:#141210;
+    color:#efe6cf;
+    padding:28px 44px 34px;
+  }
+  .cine-kicker{
+    font-family:'Special Elite', monospace;
+    font-size:11px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:12px;
+  }
+  .cine-text{ font-size:18px; line-height:1.75; }
+  .cine-text p{ margin:0 0 14px; }
+  .cine-footer .start-btn{ margin-top:8px; }
+
+  @media (max-width: 760px){
+    .log{ width:min(260px, 82vw); } 
+    .book{ padding:28px 22px 26px; }
+    .scene-banner{ width:calc(100% + 44px); margin:-28px -22px 20px; height:180px; }
+    .title-screen .hero{ width:calc(100% + 44px); margin:-28px -22px 0; height:280px; }
+    .title-screen .title-copy{ margin:-90px -22px -26px; }
+    .portrait-cameo{ width:84px; margin:0 0 10px 14px; }
+    .portrait-cameo .frame{ width:84px; height:84px; }
+    .cine-screen{ margin:-28px -22px -26px; }
+    .cine-footer{ padding:22px 22px 26px; }
+    .map-grid{ grid-template-columns: 1fr; }
+    .stage-character{ right:8%; height:90%; max-height:300px; } 
+  }
+
+  @media (max-width: 420px){
+    .map-grid{ gap:8px; } 
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    body::before{ animation:none; }
+    .log li{ animation:none; opacity:1; }
+    button.choice-btn:hover{ transform:none; }
+  }
+
+/* ---------- cartão de capítulo (tela preta de transição) ---------- */
+.chapter-card{
+  margin:-40px -44px;
+  min-height:520px;
+  background:#0e0c0a;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:40px 30px;
+  cursor:pointer;
+}
+.chapter-card .kicker-card{
+  font-family:'Special Elite', monospace;
+  font-size:12px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:14px;
+  opacity:0;
+  animation: card-in 1s ease 0.15s forwards;
+}
+.chapter-card h2{
+  font-family:'IM Fell English SC', serif;
+  font-size:clamp(24px,4.5vw,36px);
+  color:#f2ead2;
+  letter-spacing:1.5px;
+  margin:0 0 30px;
+  opacity:0;
+  animation: card-in 1.1s ease 0.35s forwards;
+}
+.chapter-card .card-hint{
+  font-family:'Special Elite', monospace;
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:#8a8064;
+  opacity:0;
+  animation: card-in 1s ease 1.1s forwards;
+}
+@keyframes card-in{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+@media (max-width:760px){
+  .chapter-card{ margin:-28px -22px; min-height:420px; padding:30px 20px; }
+}
+
+/* ---------- placeholder: silhuetas de personagens sem retrato definitivo ---------- */
+.portrait-cameo.is-placeholder .frame{
+  background:var(--paper-edge);
+  border-style:dashed;
+}
+.portrait-cameo.is-placeholder img{
+  object-fit:contain;
+  padding:14px;
+  background:var(--paper-edge);
+}
+.portrait-cameo .placeholder-flag{
+  font-family:'Special Elite', monospace;
+  font-size:8px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:var(--rust);
+  opacity:0.8;
+}
+
+/* ---------- placeholder: cenário genérico (silhueta de skyline) ---------- */
+.scene-banner.is-placeholder img{
+  object-fit:cover;
+  filter:none;
+}
+.scene-banner.is-placeholder::before{
+  content:"ilustração provisória";
+  position:absolute;
+  top:10px;
+  right:14px;
+  z-index:2;
+  font-family:'Special Elite', monospace;
+  font-size:9px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:#c9bf9c;
+  background:rgba(20,16,12,0.55);
+  padding:3px 8px;
+  border-radius:2px;
+}
+
+/* ============================================================
+   ESTILO ÚNICO "CENA" — usado em toda a narrativa (não só no
+   prólogo). Imagem em cima, rodapé escuro com texto embaixo.
+   ============================================================ */
+
+.cine-hero.is-placeholder::after{
+  content:"ilustração provisória";
+  position:absolute;
+  top:10px; right:14px;
+  z-index:2;
+  font-family:'Special Elite', monospace;
+  font-size:9px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:#c9bf9c;
+  background:rgba(20,16,12,0.55);
+  padding:3px 8px;
+  border-radius:2px;
+}
+
+.cine-kicker-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:6px;
+}
+.cine-status{
+  font-family:'Special Elite', monospace;
+  font-size:10px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:#a89f82;
+}
+.cine-progress-row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:20px;
+}
+.cine-progress-row .progress-label{
+  font-family:'Special Elite', monospace;
+  font-size:10px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:#756c54;
+}
+.cine-progress-row .progress-track{
+  width:110px;
+  height:5px;
+  background:rgba(255,255,255,0.10);
+  border:1px solid #4a4636;
+}
+.cine-progress-row .progress-fill{
+  height:100%;
+  background:var(--rust);
+  transition:width 0.5s ease;
+}
+
+.cine-body{ overflow:hidden; } /* clearfix p/ retrato flutuante */
+
+.cine-portrait{
+  float:left;
+  width:72px;
+  margin:2px 16px 12px 0;
+  text-align:center;
+}
+.cine-portrait .frame{
+  width:72px; height:72px;
+  border-radius:50%;
+  overflow:hidden;
+  border:2px solid var(--gold);
+  background:var(--paper-edge);
+  box-shadow:0 4px 14px rgba(0,0,0,0.4);
+}
+.cine-portrait .frame img{
+  width:100%; height:100%;
+  object-fit:cover;
+  object-position:top center;
+}
+.cine-portrait.is-placeholder .frame img{
+  object-fit:contain;
+  padding:10px;
+}
+.cine-portrait .name{
+  font-family:'Special Elite', monospace;
+  font-size:9px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:#a89f82;
+  margin-top:6px;
+}
+.cine-portrait .placeholder-flag{
+  font-family:'Special Elite', monospace;
+  font-size:7px;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  color:#b5573f;
+}
+
+.cine-quote{
+  clear:both;
+  font-family:'IM Fell English', serif;
+  font-style:italic;
+  font-size:19px;
+  text-align:center;
+  margin:24px 0 4px;
+  color:#d8cca8;
+  border-top:1px solid #3a352b;
+  border-bottom:1px solid #3a352b;
+  padding:18px 8px;
+}
+
+.cine-ending-tag{
+  clear:both;
+  font-family:'IM Fell English SC', serif;
+  font-size:16px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--rust);
+  margin:26px 0 12px;
+}
+
+.cine-choices{
+  clear:both;
+  margin-top:26px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.cine-choices .prompt{
+  font-family:'Special Elite', monospace;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:4px;
+}
+button.cine-choice-btn{
+  font-family:'IM Fell English', serif;
+  font-size:18px;
+  text-align:left;
+  background:rgba(255,255,255,0.03);
+  border:1px solid #4a4636;
+  color:#efe6cf;
+  padding:12px 18px;
+  cursor:pointer;
+  transition: background 0.2s ease, transform 0.15s ease, border-color 0.2s ease;
+}
+button.cine-choice-btn::before{ content:"—"; margin-right:8px; color:#c98a6f; }
+button.cine-choice-btn:hover{ background:rgba(124,47,34,0.22); border-color:var(--rust); transform:translateX(3px); }
+button.cine-choice-btn:focus-visible{ outline:2px solid var(--rust); outline-offset:2px; }
+
+.cine-footer .start-btn.continue-solo{ display:block; margin-top:28px; clear:both; }
+
+/* créditos, no mesmo estilo escuro do resto do jogo */
+.credits-screen .credits-sub{
+  text-align:center;
+  font-family:'Special Elite', monospace;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#8a8064;
+  margin-bottom:26px;
+}
+.credits-screen h2{
+  font-family:'IM Fell English SC', serif;
+  font-size:26px;
+  text-align:center;
+  margin:0 0 4px;
+  letter-spacing:1px;
+  color:#efe6cf;
+}
+.credits-list{
+  list-style:none;
+  margin:0 auto 30px;
+  padding:0;
+  max-width:440px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.credits-list li{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  border-bottom:1px dotted #3a352b;
+  padding-bottom:10px;
+  font-size:16px;
+  color:#efe6cf;
+}
+.credits-list .role{
+  font-family:'Special Elite', monospace;
+  font-size:11px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:#a89f82;
+  flex:0 0 auto;
+}
+.credits-list .name{
+  font-family:'IM Fell English', serif;
+  font-style:italic;
+  text-align:right;
+}
+.credits-screen .center-row{ display:flex; justify-content:center; clear:both; }
+
+@media (max-width:760px){
+  .cine-portrait{ width:60px; margin:2px 12px 10px 0; }
+  .cine-portrait .frame{ width:60px; height:60px; }
+}
+
+.map-grid{
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap:12px;
+  margin:22px 0 8px;
+  clear:both;
+}
+.map-card{
+  font-family:'IM Fell English', serif;
+  font-size:16px;
+  text-align:left;
+  background:rgba(255,255,255,0.03);
+  border:1px solid #4a4636;
+  color:#efe6cf;
+  padding:14px 16px;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  transition: background 0.2s ease, transform 0.15s ease, border-color 0.2s ease, opacity 0.2s ease;
+}
+.map-card:hover{ background:rgba(124,47,34,0.22); border-color:var(--rust); transform:translateY(-2px); }
+.map-card:focus-visible{ outline:2px solid var(--rust); outline-offset:2px; }
+.map-card-name{ font-size:17px; }
+.map-card-tag{
+  font-family:'Special Elite', monospace;
+  font-size:9px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:#a89f82;
+}
+.map-card.visited{
+  opacity:0.42;
+  cursor:default;
+  pointer-events:none;
+}
+.map-card.visited .map-card-tag{ color:#c98a6f; }
+
+
+.cine-hero{ display:flex; align-items:flex-end; justify-content:flex-end; } 
+
+.stage-character{
+  position:relative;
+  z-index:2;
+  height:94%;
+  max-height:430px;
+  margin:0 24% 0 0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  pointer-events:none;
+}
+.stage-character img{
+  height:100%;
+  width:auto;
+  max-width:100%;
+  object-fit:contain;
+  filter: drop-shadow(0 14px 18px rgba(0,0,0,0.55)) sepia(0.15) saturate(0.9) contrast(1.05);
+}
+.stage-character-name{
+  font-family:'Special Elite', monospace;
+  font-size:10px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:#f2ead2;
+  text-shadow:0 2px 6px rgba(0,0,0,0.85);
+  background:rgba(20,16,12,0.55);
+  padding:2px 8px;
+  margin-top:4px;
+  border-radius:2px;
+}
+.stage-character.is-placeholder img{
+  object-fit:contain;
+  filter:none;
+  opacity:0.85;
+}
+.stage-character-flag{
+  font-family:'Special Elite', monospace;
+  font-size:7px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  color:#c9bf9c;
+  background:rgba(20,16,12,0.6);
+  padding:1px 6px;
+  margin-top:2px;
+  border-radius:2px;
+  align-self:center;
+}
+
+
+/* ============================================================
+   ÍCONE DO DIÁRIO DE BORDO (esqueleto escrevendo) — animado
+   Uma única imagem (menuguiadebordo.webp) é repetida em 3 camadas
+   recortadas (corpo / cabeça / pergaminho); cada camada se mexe um
+   pouco diferente. A cabeça gira em torno do pescoço (onde o corte
+   passa), então não aparece emenda.
+   ============================================================ */
+.reaper{
+  --icon:url("../img/iconesanduichebordo/menuguiadebordo.webp");
+  position:relative;
+  display:block;
+  flex:0 0 auto;
+  width:38px; height:38px;
+  border-radius:50%;
+  background:radial-gradient(circle at 50% 42%, #efe6cf 0%, var(--paper) 62%, var(--paper-edge) 100%);
+  border:1px solid var(--gold);
+  box-shadow:0 0 0 0 rgba(124,47,34,0.0), 0 2px 8px rgba(0,0,0,0.5);
+  animation:reaper-glow 4.5s ease-in-out infinite;
+}
+.reaper .rp{
+  position:absolute;
+  inset:3px;
+  background:var(--icon) center/contain no-repeat;
+  pointer-events:none;
+}
+/* corpo: tudo, menos o "buraco" da cabeça e do pergaminho */
+.reaper .rp-body{
+  clip-path:polygon(evenodd,
+    0 0, 100% 0, 100% 100%, 0 100%, 0 0,
+    23.6% 0, 56.2% 0, 56.2% 38.9%, 23.6% 38.9%, 23.6% 0,
+    56.2% 0, 100% 0, 100% 100%, 56.2% 100%, 56.2% 0);
+  transform-origin:50% 100%;
+  animation:reaper-float 3.6s ease-in-out infinite;
+}
+.reaper .rp-head{
+  clip-path:polygon(23% 0, 56.8% 0, 56.8% 39.5%, 23% 39.5%);
+  transform-origin:42% 39%;
+  animation:reaper-head 5.2s ease-in-out infinite, reaper-float 3.6s ease-in-out infinite;
+}
+.reaper .rp-scroll{
+  clip-path:polygon(55.7% 0, 100% 0, 100% 100%, 55.7% 100%);
+  transform-origin:56% 70%;
+  animation:reaper-scroll 4.1s ease-in-out infinite, reaper-float 3.6s ease-in-out infinite;
+}
+@keyframes reaper-float{
+  0%,100%{ translate:0 0; }
+  50%    { translate:0 -1.6px; }
+}
+@keyframes reaper-head{
+  0%,100%{ rotate:0deg; }
+  18%    { rotate:-3deg; }
+  34%    { rotate:2deg; }
+  50%    { rotate:0deg; }
+  66%    { rotate:3.5deg; }   /* olha pro pergaminho */
+  82%    { rotate:1deg; }
+}
+@keyframes reaper-scroll{
+  0%,100%{ rotate:0deg; }
+  50%    { rotate:1deg; }
+}
+@keyframes reaper-glow{
+  0%,100%{ box-shadow:0 0 0 0 rgba(124,47,34,0.0), 0 2px 8px rgba(0,0,0,0.5); }
+  50%    { box-shadow:0 0 14px 3px rgba(124,47,34,0.45), 0 2px 8px rgba(0,0,0,0.5); }
+}
+
+/* passar o mouse / foco: ele fica mais agitado */
+.log-tab:hover .reaper, .log-tab:focus-visible .reaper{ animation-duration:1.8s; }
+.log-tab:hover .rp-head, .log-tab:focus-visible .rp-head{ animation-duration:2.2s, 3.6s; }
+
+/* nova escolha registrada: ele "anota" (a cabeça balança rápido e o ícone dá um pulo) */
+.log-tab.scribble .reaper{ animation:reaper-glow 4.5s ease-in-out infinite, reaper-pop 0.7s ease-out; }
+.log-tab.scribble .rp-head{ animation:reaper-write 0.7s ease-in-out 1, reaper-float 3.6s ease-in-out infinite; }
+@keyframes reaper-pop{ 0%{ scale:1; } 30%{ scale:1.22; } 100%{ scale:1; } }
+@keyframes reaper-write{
+  0%,100%{ rotate:0deg; } 15%{ rotate:6deg; } 30%{ rotate:-4deg; } 45%{ rotate:6deg; } 60%{ rotate:-3deg; } 80%{ rotate:3deg; }
+}
+
+/* cabeçalho do painel aberto: versão maior ao lado do título */
+.log .log-title{ display:flex; align-items:center; gap:10px; }
+.log .log-title .reaper{ width:52px; height:52px; }
+
+@media (prefers-reduced-motion: reduce){
+  .reaper, .reaper .rp, .log-tab.scribble .reaper, .log-tab.scribble .rp-head{ animation:none; }
+}
+
+/* o cenário ocupa o quadro inteiro; o personagem fica "em pé" por cima dele
+   (sem isso o flex espremia a imagem do cenário e deixava uma faixa bege) */
+.cine-hero > img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.cine-hero .stage-character img{
+  position:static;
+  width:auto;
+  height:auto;
+  flex:1 1 0;
+  min-height:0;
+  max-width:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 14px 18px rgba(0,0,0,0.55));
+}
+
+
+/* ============================================================
+   DIÁRIO DE BORDO sob demanda: só o selinho do esqueleto fica
+   visível (canto da tela, sem barra lateral). O painel só abre
+   ao clicar e fecha ao clicar fora, no X ou com Esc.
+   ============================================================ */
+.log{ transform:none!important; width:0!important; height:0!important; display:block; }
+.log-tab{
+  position:fixed; top:10px; left:10px; z-index:41;
+  width:48px!important; height:48px!important; flex:none!important;
+  padding:0!important; gap:0!important;
+  background:transparent!important; border:none!important; box-shadow:none!important;
+  border-radius:50%; justify-content:center!important;
+}
+.log-tab .reaper{ width:44px; height:44px; }
+.log-tab-label{ position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+.log.open .log-tab{ opacity:0; pointer-events:none; }
+.log-panel{
+  position:fixed; top:0; left:0; height:100dvh; width:min(300px,84vw);
+  z-index:42; transform:translateX(-105%); transition:transform .3s ease;
+  border-right:1px solid #4a4636!important; box-shadow:6px 0 24px rgba(0,0,0,.55);
+  visibility:hidden;
+}
+.log.open .log-panel{ transform:translateX(0); visibility:visible; }
+.log-panel .log-title{ justify-content:flex-start; }
+.log-close{
+  margin-left:auto; background:none; border:1px solid #4a4636; color:#c9bf9c;
+  width:32px; height:32px; font-size:18px; line-height:1; cursor:pointer; border-radius:2px;
+}
+.log-close:hover{ background:#232620; }
+.log-backdrop{
+  position:fixed; inset:0; z-index:39; background:rgba(0,0,0,.45);
+  opacity:0; pointer-events:none; transition:opacity .3s ease;
+}
+.log.open ~ .log-backdrop, .log-backdrop.show{ opacity:1; pointer-events:auto; }
+
+
+/* ============================================================
+   Ambientação estilo "diálogo de RPG": moldura dourada na cena,
+   personagens grandes e centralizados, plaquinha de nome em faixa
+   ============================================================ */
+.cine-hero{
+  border:3px solid #b8924a;
+  box-shadow: inset 0 0 0 2px #3a2a12, inset 0 0 60px rgba(0,0,0,0.55), 0 6px 18px rgba(0,0,0,0.5);
+}
+.cine-hero::before{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(to top, rgba(0,0,0,0.45), transparent 35%);
+}
+.stage-character-name{
+  font-family:'Special Elite', monospace;
+  font-size:12px;
+  letter-spacing:2px;
+  color:#f6e7bf;
+  background:linear-gradient(#3b2a14, #1f160a);
+  border:1px solid #b8924a;
+  border-radius:3px;
+  padding:3px 16px;
+  margin-top:-6px;
+  position:relative; z-index:3;
+  box-shadow:0 2px 6px rgba(0,0,0,0.6);
+}
+
+
+/* ============================================================
+   Personagens em plano próximo (da cintura para cima), grandes e
+   perto da tela, como num diálogo de RPG. O corte é feito pelo
+   próprio quadro da cena; texto e escolhas ficam como antes.
+   ============================================================ */
+.cine-hero{ height:clamp(320px, 60vw, 540px); }
+.stage-character{
+  height:100%; max-height:none;
+  overflow:hidden;
+  justify-content:flex-start;
+  margin:0 6% 0 0;
+}
+.cine-hero .stage-character img{
+  flex:none;
+  height:175%;
+  width:auto;
+  max-width:none;
+  margin-top:3%;
+}
+.stage-character-name{
+  position:absolute; left:50%; bottom:12px; transform:translateX(-50%);
+  margin:0; white-space:nowrap; z-index:4;
+}
+.stage-character-flag{ display:none; }
+
+@media (max-width: 760px){
+  .cine-hero{ height:clamp(260px, 72vw, 400px); }
+  .cine-hero .stage-character img{ height:140%; }
+  .stage-character{ margin-right:1%; }
+  .stage-character-name{ font-size:8px; letter-spacing:0.5px; padding:2px 6px; bottom:8px; }
+  .stage-catarina{ left:1% !important; transform:none !important; margin:0 !important; z-index:3; }
+}
