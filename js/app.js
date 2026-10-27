@@ -241,9 +241,9 @@ function renderCredits(){
           <div class="credits-sub">Créditos</div>
           <ul class="credits-list">
             <li><span class="role">Projeto</span><span class="name">Bolsa História do Terror</span></li>
-            <li><span class="role">Narrativa</span><span class="name">Joice Pedroso</span></li>
+            <li><span class="role">Narrativa</span><span class="name">Joice Cardoso</span></li>
             <li><span class="role">Ilustração dos personagens</span><span class="name">Nicole Paráboa</span></li>
-            <li><span class="role">Desenvolvimento do jogo</span><span class="name">Maria eduarda Corrêa e Joice Pedroso Cardoso</span></li>
+            <li><span class="role">Desenvolvimento do jogo</span><span class="name">Maria eduarda Corrêa e Joice Cardoso</span></li>
             <li><span class="role">Orientação</span><span class="name">André Luiz Corrêa</span></li>
           </ul>
           <div class="center-row">
