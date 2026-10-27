@@ -644,11 +644,6 @@
   border-radius:2px;
 }
 
-/* ============================================================
-   ESTILO ÚNICO "CENA" — usado em toda a narrativa (não só no
-   prólogo). Imagem em cima, rodapé escuro com texto embaixo.
-   ============================================================ */
-
 .cine-hero.is-placeholder::after{
   content:"ilustração provisória";
   position:absolute;
